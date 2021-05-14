@@ -26,15 +26,15 @@ options:
 > -n, --new=NEW NOTE open default editor of choice in ~/bin/reference/<note_name>
  
 arguments:
-search for strings inside your notes, or the subjects of the notes themselves
-can also supply no options and supply the exact match of the file to read
+search for strings inside your notes, or the names of the notes themselves
+can also supply no options and supply the exact match of the file to read the whole thing
 examples:
  
-notes example
+notes examples
 > notes -f nmcli_ --> did you mean nmcli_examples, nmcli_standards
 > 
 > notes -g DNS1= --> file: nmcli-standards: HWADDR=... ==> 802-3-ethernet.mac-address ...
 > 
 > notes -n new_note --> runs vi at path to new_note
 > 
-> notes example ---> 'neat' 
+> notes example ---> 'neat' (uses CAT by default, can change to LESS if you have lengthy notes)
