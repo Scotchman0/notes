@@ -10,11 +10,6 @@ editor=vi #can edit this line to nano/other editor of choice
 path=~/bin/reference/ #note - you must include the trailing slash at the end of your path
 length=$(echo $path | wc -m) #trims the full relative filename down to just the note names
 
-#check if ~/bin/ and ~/bin/reference exist, and if not, creates them
-
-#adds ~/bin to user PATH for session
-
-
 
 while test $# -gt 0; do
   case "$1" in
