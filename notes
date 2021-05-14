@@ -29,6 +29,7 @@ while test $# -gt 0; do
       echo "-f, --find=FIND           search for a subject string"
       echo "-g, --grep=GREP STRING    search for any display matches inside library"
       echo "-n, --new=NEW NOTE open default editor of choice in ~/bin/reference/<note_name>"
+      echo "** -n will also open an editor on existing note if you match the note name"
       echo " "
       echo "arguments:"
       echo "search for strings inside your notes, or the subjects of the notes themselves"
@@ -37,7 +38,7 @@ while test $# -gt 0; do
       echo " "
       echo "$package example"
       echo "$package -f nmcli_ --> did you mean nmcli_examples, nmcli_standards" 
-      echo "$package -g DNS1= --> file: nmcli-standards: HWADDR=... ==> 802-3-ethernet.mac-address ..."
+      echo "$package -g 'HWADDR'= --> file: nmcli-standards: HWADDR=... ==> 802-3-ethernet.mac-address ..."
       echo "$package -n new_note --> runs $editor at path to new_note"
       echo "$package example ---> 'neat' "
       exit 0
@@ -69,7 +70,7 @@ while test $# -gt 0; do
       if test $# -gt 0; then
       	$editor $path"$@"
       else
-      	echo "need to specify a new file name"
+      	echo "need to specify a new/existing file name"
       fi
       shift
       ;;	
