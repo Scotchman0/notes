@@ -1,0 +1,86 @@
+#!/bin/bash
+#reference table for quicknotes similar to tldr but for specific function calls
+
+#basic usage: qlookup <query>
+#will cat the contents of matching file entry in neighboring ~/bin/reference dir
+
+#define name of package in help script
+package="notes"
+editor=vi #can edit this line to nano/other editor of choice
+path=~/bin/reference/ #note - you must include the trailing slash at the end of your path
+length=$(echo $path | wc -m) #trims the full relative filename down to just the note names
+
+#check if ~/bin/ and ~/bin/reference exist, and if not, creates them
+
+#adds ~/bin to user PATH for session
+
+
+
+while test $# -gt 0; do
+  case "$1" in
+    -h|--help)
+      echo "$package - your local library of quick notes"
+      echo " "
+      echo "notes are stored by default in ~/bin/reference"
+      echo "$package [options] [arguments]"
+      echo " "
+      echo "options:"
+      echo "-h, --help                show brief help"
+      echo "-f, --find=FIND           search for a subject string"
+      echo "-g, --grep=GREP STRING    search for any display matches inside library"
+      echo "-n, --new=NEW NOTE open default editor of choice in ~/bin/reference/<note_name>"
+      echo " "
+      echo "arguments:"
+      echo "search for strings inside your notes, or the subjects of the notes themselves"
+      echo "can also supply no options and supply the exact match of the file to read"
+      echo "examples:"
+      echo " "
+      echo "$package example"
+      echo "$package -f nmcli_ --> did you mean nmcli_examples, nmcli_standards" 
+      echo "$package -g DNS1= --> file: nmcli-standards: HWADDR=... ==> 802-3-ethernet.mac-address ..."
+      echo "$package -n new_note --> runs $editor at path to new_note"
+      echo "$package example ---> 'neat' "
+      exit 0
+      ;;
+    -f|--find)
+      shift
+      if test $# -gt 0; then
+        #export PROCESS=$1
+        find $path"$@"* | cut -c $length-100
+      else
+        echo "no string specified to look for..."
+        exit 1
+      fi
+      shift
+      ;;
+    -g|--grep)
+      shift
+      if test $# -gt 0; then
+        #export OUTPUT=$1
+        cat $path* | grep "$@"
+      else
+        echo "no string supplied to grep"
+        exit 1
+      fi
+      shift
+      ;;
+    -n|--new)
+      shift
+      if test $# -gt 0; then
+      	$editor $path"$@"
+      else
+      	echo "need to specify a new file name"
+      fi
+      shift
+      ;;	
+    *)
+	 if test $# -gt 0; then
+	 	cat $path"$@"
+	 	break
+	 else
+	 	echo "try notes -h"
+	  break
+	fi
+      ;;
+  esac
+done
