@@ -1,7 +1,9 @@
 #!/bin/bash
 #reference table for quicknotes similar to tldr but for specific function calls
 
-#basic usage: qlookup <query>
+#basic usage: notes [option] [argument]
+#options listed below in -h case segment
+#arguments are always strings (add quotes for more specific searches or when adding a space between filenames/greps)
 #will cat the contents of matching file entry in neighboring ~/bin/reference dir
 
 #define name of package in help script
@@ -9,6 +11,7 @@ package="notes"
 editor=vi #can edit this line to nano/other editor of choice
 path=~/bin/reference/ #note - you must include the trailing slash at the end of your path
 length=$(echo $path | wc -m) #trims the full relative filename down to just the note names
+reader=cat #edit this to 'less' if you find that you'd like more control over your note veiwing, or would like to open them with a GUI reader like preview: 'xdg-open'
 
 
 while test $# -gt 0; do
@@ -71,7 +74,7 @@ while test $# -gt 0; do
       ;;	
     *)
 	 if test $# -gt 0; then
-	 	cat $path"$@"
+	 	$reader $path"$@"
 	 	break
 	 else
 	 	echo "try notes -h"
