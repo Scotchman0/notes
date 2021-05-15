@@ -14,7 +14,7 @@ length=$(echo $path | wc -m) #trims the full relative filename down to just the 
 reader=cat #edit this to 'less' if you find that you'd like more control over your note veiwing, or would like to open them with a GUI reader like preview: 'xdg-open'
 
 
-while query $# -gt 0; do
+while test $# -gt 0; do
   case "$1" in
     -h|--help)
       echo "$package - your local library of quick notes"
@@ -43,7 +43,7 @@ while query $# -gt 0; do
       ;;
     -f|--find)
       shift
-      if query $# -gt 0; then
+      if test $# -gt 0; then
         find $path"$@"* | cut -c $length-100
       else
         echo "no string specified to look for..."
@@ -53,7 +53,7 @@ while query $# -gt 0; do
       ;;
     -g|--grep)
       shift
-      if query $# -gt 0; then
+      if test $# -gt 0; then
         cat $path* | grep "$@"
       else
         echo "no string supplied to grep"
@@ -63,7 +63,7 @@ while query $# -gt 0; do
       ;;
     -n|--new)
       shift
-      if query $# -gt 0; then
+      if test $# -gt 0; then
       	$editor $path"$@"
       else
       	echo "need to specify a new/existing file name"
