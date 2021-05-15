@@ -52,6 +52,7 @@ fi
 
 #definitions:
 . ~/.notes.conf
+package=notes
 
 #basic run script
 while test $# -gt 0; do
@@ -59,7 +60,7 @@ while test $# -gt 0; do
     -h|--help)
       echo "$package - your local library of quick notes"
       echo " "
-      echo "notes are stored by default in ~/my-notes"
+      echo "notes are currently being saved in $path"
       echo "$package [options] [arguments]"
       echo " "
       echo "options:"
@@ -67,17 +68,14 @@ while test $# -gt 0; do
       echo "-f, --find=FIND           search for a subject string"
       echo "-g, --grep=GREP STRING    search for any display matches inside library"
       echo "-n, --new=NEW NOTE open default editor of choice in ~/my-notes/<note_name>"
-      echo "** -n will also open an editor on existing note if you match the note name"
       echo " "
-      echo "arguments:"
-      echo "search for strings inside your notes, or the subjects of the notes themselves"
-      echo "can also supply no options and supply the exact match of the file to read"
+      echo "arguments: <string> (note title or greppable line entry)"
       echo "examples:"
       echo " "
       echo "$package examples"
-      echo "$package -f nmcli_ --> did you mean nmcli_examples, nmcli_standards" 
-      echo "$package -g 'HWADDR'= --> file: nmcli-standards: HWADDR=... ==> 802-3-ethernet.mac-address ..."
-      echo "$package -n new_note --> runs $editor at path to new_note"
+      echo "$package -f ex --> the following notes match this string: example ..." 
+      echo "$package -g welcome= --> welcome to notes!"
+      echo "$package -n new_note --> runs $editor at ${path}new_note"
       echo ""
       echo "try the command: 'notes example'"
       echo ""
@@ -86,7 +84,11 @@ while test $# -gt 0; do
     -f|--find)
       shift
       if test $# -gt 0; then
-        find $path"$@"* | cut -c $length-100
+      	echo "the following notes match this string:"
+      	echo " "
+        find $path"$@"* | cut -c $length-
+        echo " "
+        echo "run 'notes <titlename> to view"
       else
         echo "no string specified to look for..."
         exit 1
