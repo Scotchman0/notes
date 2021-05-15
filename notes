@@ -6,27 +6,48 @@
 #arguments are always strings (add quotes for more specific searches or when adding a space between filenames/greps)
 #will cat the contents of matching file entry in neighboring ~/bin/reference dir
 
-#define name of package in help script
-package="notes"
-editor=vi #can edit this line to nano/other editor of choice
-path=~/bin/reference/ #note - you must include the trailing slash at the end of your path
-length=$(echo $path | wc -m) #trims the full relative filename down to just the note names
-reader=cat #edit this to 'less' if you find that you'd like more control over your note veiwing, or would like to open them with a GUI reader like preview: 'xdg-open'
+FILENAME=~/.notes.conf
 
+#first time run block:
+first_run() {
+	#generate initial conf file + default values for editing later (but will still work if
+	#user cancels script at this point)
+	touch ~/.notes.conf
+	mkdir ~/my-notes
+	echo "#!/bin/bash" >> ~/.notes.conf
+	echo "#notes app default settings:" >> ~/.notes.conf
+	echo "#changing the below values will modify the 'notes' command behavior" >> ~/.notes.conf
+	echo "path=~/my-notes/ #where you will save notes for query" >> ~/.notes.conf
+	echo "editor=vi #default editor for creating new notes with -n option" >> ~/.notes.conf
+	echo "reader=cat #default, prints directly to terminal, can change to 'less'" >> ~/.notes.conf
+	echo "hello world!" >> ~/my-notes/example
+}
 
+if [ ! -f "$FILENAME" ]; then
+   first_run
+   echo "establishing default settings in ~/.notes.conf and creating default save directory in ~/my-notes"
+   echo ""
+else
+	echo ""
+fi
+
+#definitions:
+. ~/.notes.conf
+
+#basic run script
 while test $# -gt 0; do
   case "$1" in
     -h|--help)
       echo "$package - your local library of quick notes"
       echo " "
-      echo "notes are stored by default in ~/bin/reference"
+      echo "notes are stored by default in ~/my-notes"
       echo "$package [options] [arguments]"
       echo " "
       echo "options:"
       echo "-h, --help                show brief help"
       echo "-f, --find=FIND           search for a subject string"
       echo "-g, --grep=GREP STRING    search for any display matches inside library"
-      echo "-n, --new=NEW NOTE open default editor of choice in ~/bin/reference/<note_name>"
+      echo "-n, --new=NEW NOTE open default editor of choice in ~/my-notes/<note_name>"
       echo "** -n will also open an editor on existing note if you match the note name"
       echo " "
       echo "arguments:"
@@ -34,11 +55,13 @@ while test $# -gt 0; do
       echo "can also supply no options and supply the exact match of the file to read"
       echo "examples:"
       echo " "
-      echo "$package example"
+      echo "$package examples"
       echo "$package -f nmcli_ --> did you mean nmcli_examples, nmcli_standards" 
       echo "$package -g 'HWADDR'= --> file: nmcli-standards: HWADDR=... ==> 802-3-ethernet.mac-address ..."
       echo "$package -n new_note --> runs $editor at path to new_note"
-      echo "$package example ---> 'neat' "
+      echo ""
+      echo "try the command: 'notes example'"
+      echo ""
       exit 0
       ;;
     -f|--find)
@@ -64,7 +87,7 @@ while test $# -gt 0; do
     -n|--new)
       shift
       if test $# -gt 0; then
-      	$editor $path"$@"
+      	$editor $path"$@".txt
       else
       	echo "need to specify a new/existing file name"
       fi
