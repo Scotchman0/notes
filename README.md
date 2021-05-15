@@ -43,7 +43,9 @@ examples:
  
 notes examples
 > notes -f ex --> the following notes match this string: example ..." 
+> 
 > notes -g welcome= --> welcome to notes!"
+> 
 > notes -n new_note --> runs vi at /path/to/notes/new_note
 
 try the command: 'notes example' for getting started
