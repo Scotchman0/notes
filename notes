@@ -20,13 +20,32 @@ first_run() {
 	echo "path=~/my-notes/ #where you will save notes for query" >> ~/.notes.conf
 	echo "editor=vi #default editor for creating new notes with -n option" >> ~/.notes.conf
 	echo "reader=cat #default, prints directly to terminal, can change to 'less'" >> ~/.notes.conf
-	echo "hello world!" >> ~/my-notes/example
+	echo 'length="$(echo $path | wc -m)" #trims the start of the path so that -f only shares filenames' >> ~/.notes.conf
+	echo "" >> ~/my-notes/example
+	echo "welcome to notes!" >> ~/my-notes/example
+	echo "note's options are modifiable in the ~/notes.conf file"
+	echo "by default, notes opens with $CAT, but you can use 'LESS' or other text programs"  >> ~/my-notes/example
+	echo ""  >> ~/my-notes/example
+	echo "ways to get started with notes:"  >> ~/my-notes/example
+	echo "you can create a new note with 'notes -n <note_name>" >> ~/my-notes/example
+	echo "get information about notes with notes -h" >> ~/my-notes/example
+	echo "query for note titles with 'notes -f <string*> (uses globbing)" >> ~/my-notes/example
+	echo "and grep for strings inside your notes with 'notes -g <string>" >> ~/my-notes/example
+	echo "feel free to check the wiki for more data, discussions." >> ~/my-notes/example
+	echo "have fun with notes!" >> ~/my-notes/example
+	echo "" >> ~/my-notes/example
+	echo "to see how this works, try 'notes -g query'" >> ~/my-notes/example
+	echo "also try 'notes -f ex'" >> ~/my-notes/example
+	echo "and finally, try notes -n 'my_note' (default: VIM), you can edit this" >> ~/my-notes/example
+	echo "by opening ~/.notes.conf and change the 'editor=' to NANO or xdg-open" >> ~/my-notes/example
+	echo "which should open in your default text program, takes commands as args" >> ~/my-notes/example
 }
 
 if [ ! -f "$FILENAME" ]; then
    first_run
    echo "establishing default settings in ~/.notes.conf and creating default save directory in ~/my-notes"
    echo ""
+   echo "try notes -h or 'notes example' for getting started"
 else
 	echo ""
 fi
@@ -98,7 +117,7 @@ while test $# -gt 0; do
 	 	$reader $path"$@"
 	 	break
 	 else
-	 	echo "try notes -h"
+	 	echo "try notes example or 'notes -h'"
 	  break
 	fi
       ;;
