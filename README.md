@@ -25,7 +25,7 @@ USAGE:
 
 > notes [options] [arguments]
  
-options:
+options: (optional)
 > -h, --help                show brief help
 > 
 > -f, --find=FIND           search for a subject string
@@ -42,6 +42,8 @@ can also supply no options and supply the exact match of the file to read the wh
 examples:
  
 notes examples
+> notes <name_of_note> --> cat contents of <name_of_note> (default behavior)
+>
 > notes -f ex --> the following notes match this string: example ..." 
 > 
 > notes -g welcome= --> welcome to notes!"
