@@ -24,7 +24,7 @@ first_run() {
 	echo "" >> ~/my-notes/example
 	echo "welcome to notes!" >> ~/my-notes/example
 	echo "note's options are modifiable in the ~/notes.conf file"
-	echo "by default, notes opens with $CAT, but you can use 'LESS' or other text programs"  >> ~/my-notes/example
+	echo "by default, notes opens with 'CAT', but you can use 'LESS' or other text programs"  >> ~/my-notes/example
 	echo ""  >> ~/my-notes/example
 	echo "ways to get started with notes:"  >> ~/my-notes/example
 	echo "you can create a new note with 'notes -n <note_name>" >> ~/my-notes/example
