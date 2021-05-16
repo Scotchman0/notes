@@ -24,7 +24,7 @@ first_run() {
 	echo "" >> ~/my-notes/example
 	echo "welcome to notes!" >> ~/my-notes/example
 	echo "note's options are modifiable in the ~/notes.conf file"
-	echo "by default, notes opens with 'CAT', but you can use 'LESS' or other text programs"  >> ~/my-notes/example
+	echo "by default, notes opens with $CAT, but you can use 'LESS' or other text programs"  >> ~/my-notes/example
 	echo ""  >> ~/my-notes/example
 	echo "ways to get started with notes:"  >> ~/my-notes/example
 	echo "you can create a new note with 'notes -n <note_name>" >> ~/my-notes/example
@@ -63,17 +63,17 @@ while test $# -gt 0; do
       echo "notes are currently being saved in $path"
       echo "$package [options] [arguments]"
       echo " "
-      echo "options: (optional)"
+      echo "options:"
       echo "-h, --help                show brief help"
       echo "-f, --find=FIND           search for a subject string"
       echo "-g, --grep=GREP STRING    search for any display matches inside library"
-      echo "-l, --list= LIST NOTES    list all note titles"
       echo "-n, --new=NEW NOTE open default editor of choice in ~/my-notes/<note_name>"
+      echo "-l, --list= LIST NOTES    list all note titles"
       echo " "
       echo "arguments: <string> (note title or greppable line entry)"
       echo "examples:"
       echo " "
-      echo "$package example --> CAT the content of 'example' from $path (default behavior)"
+      echo "$package examples"
       echo "$package -f ex --> the following notes match this string: example ..." 
       echo "$package -g welcome= --> welcome to notes!"
       echo "$package -n new_note --> runs $editor at ${path}new_note"
@@ -114,8 +114,8 @@ while test $# -gt 0; do
       	echo "need to specify a new/existing file name"
       fi
       shift
-      ;;
-     --l|--list)
+      ;;	
+    -l|--list)
         ls $path
         break
       ;;
