@@ -67,7 +67,7 @@ while test $# -gt 0; do
       echo "-h, --help                show brief help"
       echo "-f, --find=FIND           search for a subject string"
       echo "-g, --grep=GREP STRING    search for any display matches inside library"
-      echo "-l, --list= LIST NOTES    list all note titles
+      echo "-l, --list= LIST NOTES    list all note titles"
       echo "-n, --new=NEW NOTE open default editor of choice in ~/my-notes/<note_name>"
       echo " "
       echo "arguments: <string> (note title or greppable line entry)"
