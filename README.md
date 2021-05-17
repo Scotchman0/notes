@@ -16,7 +16,7 @@ settings (like your default save path) and preferred editor/reader are managed i
 # getting started with notes: 
 1. clone this repository
 2. make notes executable with $ sudo chmod a+x ./notes
-3. copy or move notes into /usr/bin, or, add the install directory to your path for calling later: (recommended so you can 'git pull' updates later)
+3. copy or move notes into /usr/bin, or, add the install directory to your path for calling later:
 > sudo export PATH=${PATH}:/path/to/this/executable
 4. type 'notes' into commandline and press return to create the default conf variables and default save location, then modify ~/.notes.conf if desired. 
 5. type 'notes -h' for help or 'notes example' for a welcome file example that provides options on getting started + basic usage.
@@ -51,3 +51,20 @@ notes examples
 > notes -n new_note --> runs vi at /path/to/notes/new_note
 
 try the command: 'notes example' for getting started
+
+
+
+
+# tab auto-complete
+
+you can use tab auto-completion if you run notes while inside your notes library. Generally the syntax requires 
+
+$ notes -l
+
+to list all notes, then $ notes <full_note_name> to display the contents of the file. Obviously this is inefficient,
+
+So cd into your ~/my-notes folder so that notes n+tab will autocomplete to notes nmcli_quick_detail (or other note name)
+
+I'm working on implementing tab detection into the baseline code so you can run notes from anywhere with this feature. For now, if working in other dirs, use 
+$ notes -l 
+to list the name of your notes, or notes -f "string*" to find a note title to call it up if you don't remember the note title.
