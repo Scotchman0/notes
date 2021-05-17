@@ -109,7 +109,7 @@ while test $# -gt 0; do
     -n|--new)
       shift
       if test $# -gt 0; then
-      	$editor $path"$@".txt
+      	$editor $path"$@"
       else
       	echo "need to specify a new/existing file name"
       fi
