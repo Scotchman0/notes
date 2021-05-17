@@ -17,7 +17,7 @@ first_run() {
 	echo "#!/bin/bash" >> ~/.notes.conf
 	echo "#notes app default settings:" >> ~/.notes.conf
 	echo "#changing the below values will modify the 'notes' command behavior" >> ~/.notes.conf
-	echo "path=~/my-notes/ #where you will save notes for query" >> ~/.notes.conf
+	echo "path=~/my-notes/ #where you will save notes for query (**include trailing /)" >> ~/.notes.conf
 	echo "editor=vi #default editor for creating new notes with -n option" >> ~/.notes.conf
 	echo "reader=cat #default, prints directly to terminal, can change to 'less'" >> ~/.notes.conf
 	echo 'length="$(echo $path | wc -m)" #trims the start of the path so that -f only shares filenames' >> ~/.notes.conf
@@ -62,6 +62,7 @@ while test $# -gt 0; do
       echo " "
       echo "notes are currently being saved in $path"
       echo "$package [options] [arguments]"
+      echo "configuration settings managed in ~/.notes.conf"
       echo " "
       echo "options:"
       echo "-h, --help                show brief help"
