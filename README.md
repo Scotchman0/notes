@@ -16,7 +16,7 @@ settings (like your default save path) and preferred editor/reader are managed i
 # getting started with notes: 
 1. clone this repository
 2. make notes executable with $ sudo chmod a+x ./notes
-3. copy or move notes into /usr/bin, or, add the install directory to your path for calling later:
+3. copy or move notes into /usr/bin, or, add the install directory to your path for calling later: (recommended so you can 'git pull' updates later)
 > sudo export PATH=${PATH}:/path/to/this/executable
 4. type 'notes' into commandline and press return to create the default conf variables and default save location, then modify ~/.notes.conf if desired. 
 5. type 'notes -h' for help or 'notes example' for a welcome file example that provides options on getting started + basic usage.
