@@ -51,3 +51,20 @@ notes examples
 > notes -n new_note --> runs vi at /path/to/notes/new_note
 
 try the command: 'notes example' for getting started
+
+
+
+
+# tab auto-complete
+
+you can use tab auto-completion if you run notes while inside your notes library. Generally the syntax requires 
+
+$ notes -l
+
+to list all notes, then $ notes <full_note_name> to display the contents of the file. Obviously this is inefficient,
+
+So cd into your ~/my-notes folder so that notes n+tab will autocomplete to notes nmcli_quick_detail (or other note name)
+
+I'm working on implementing tab detection into the baseline code so you can run notes from anywhere with this feature. For now, if working in other dirs, use 
+$ notes -l 
+to list the name of your notes, or notes -f "string*" to find a note title to call it up if you don't remember the note title.
