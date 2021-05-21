@@ -6,6 +6,11 @@
 #arguments are always strings (add quotes for more specific searches or when adding a space between filenames/greps)
 #will cat the contents of matching file entry in neighboring ~/bin/reference dir
 
+
+#https://iridakos.com/programming/2018/03/01/bash-programmable-completion-tutorial
+#complete function
+
+
 FILENAME=~/.notes.conf
 
 #first time run block:
@@ -23,7 +28,7 @@ first_run() {
 	echo 'length="$(echo $path | wc -m)" #trims the start of the path so that -f only shares filenames' >> ~/.notes.conf
 	echo "" >> ~/my-notes/example
 	echo "welcome to notes!" >> ~/my-notes/example
-	echo "note's options are modifiable in the ~/notes.conf file"
+	echo "note's options are modifiable in the ~/notes.conf file" >> ~/my-notes/example
 	echo "by default, notes opens with $CAT, but you can use 'LESS' or other text programs"  >> ~/my-notes/example
 	echo ""  >> ~/my-notes/example
 	echo "ways to get started with notes:"  >> ~/my-notes/example
@@ -46,13 +51,15 @@ if [ ! -f "$FILENAME" ]; then
    echo "establishing default settings in ~/.notes.conf and creating default save directory in ~/my-notes"
    echo ""
    echo "try notes -h or 'notes example' for getting started"
-else
-	echo ""
 fi
 
 #definitions:
 . ~/.notes.conf
 package=notes
+
+#autofill feature (currently broken) 
+complete -W "$(q=($path/*/*); sed 's@\.md @ @g' <<<${q[@]##*/})" test
+
 
 #basic run script
 while test $# -gt 0; do
@@ -67,9 +74,11 @@ while test $# -gt 0; do
       echo "options:"
       echo "-h, --help                show brief help"
       echo "-f, --find=FIND           search for a subject string"
+      echo "-l, --list= LIST NOTES    list all note titles"
       echo "-g, --grep=GREP STRING    search for any display matches inside library"
       echo "-n, --new=NEW NOTE/edit   opens $editor in $path<note_name>"
-      echo "-l, --list= LIST NOTES    list all note titles"
+      echo "-d, --delete              deletes note: notes -d <note_name> (will ask to confirm)"
+      echo "-! use with -d to delete without asking: notes -d! <notename> (unrecoverable)" 
       echo " "
       echo "arguments: <string> (note title or greppable line entry)"
       echo "examples:"
@@ -119,6 +128,28 @@ while test $# -gt 0; do
     -l|--list)
         ls $path
         break
+      ;;
+    -d|--delete) ## THIS BLOCK NEEDS WORK:
+      shift
+      if test $# -gt 0; then
+        echo "delete '$@'? (y/n)"
+        read answer
+        case $1 in
+          y|Y)
+            #rm "$@"
+            shift
+            echo "deleted!"
+            exit 1
+            ;;
+          n|N)
+            shift
+            echo "cancelled delete"
+            exit 1
+            ;;
+        esac
+      else
+        echo "cancelled delete"
+      fi
       ;;
     *)
 	 if test $# -gt 0; then
