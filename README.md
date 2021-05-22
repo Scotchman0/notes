@@ -55,16 +55,17 @@ try the command: 'notes example' for getting started
 
 
 
-# tab auto-complete
+# tab auto-completion:
 
-you can use tab auto-completion if you run notes while inside your notes library. Generally the syntax requires 
+I tried to implement this feature in the .conf file but unless I rewrite this in python I can't call the functionality with 'complete' the way I want,
+therefore you'll need to make the following change to your shell environment for this feature.
 
-$ notes -l
+Once completed, you can run notes <tab> to list all notes (replaces notes -l) and notes e<tab> to autofill to: notes example
 
-to list all notes, then $ notes <full_note_name> to display the contents of the file. Obviously this is inefficient,
+If you'd like to enable Tab completion (which I recommend because it's way more convenient)
+you'll need to append the following lines to your ~/.bashrc or ~/.zshrc profile (or equivalent)
 
-So cd into your ~/my-notes folder so that notes n+tab will autocomplete to notes nmcli_quick_detail (or other note name)
+> mypath=~/my-notes #or wherever you've updated your notes library to in ~/.notes.conf
+> 
+> complete -W "$(q=($mypath/*); sed 's@\.md @ @g' <<<${q[@]##*/})" notes
 
-I'm working on implementing tab detection into the baseline code so you can run notes from anywhere with this feature. For now, if working in other dirs, use 
-$ notes -l 
-to list the name of your notes, or notes -f "string*" to find a note title to call it up if you don't remember the note title.

@@ -6,12 +6,9 @@
 #arguments are always strings (add quotes for more specific searches or when adding a space between filenames/greps)
 #will cat the contents of matching file entry in neighboring ~/bin/reference dir
 
-
+#cat
 #https://iridakos.com/programming/2018/03/01/bash-programmable-completion-tutorial
 #complete function
-
-
-FILENAME=~/.notes.conf
 
 #first time run block:
 first_run() {
@@ -26,6 +23,8 @@ first_run() {
 	echo "editor=vi #default editor for creating new notes with -n option" >> ~/.notes.conf
 	echo "reader=cat #default, prints directly to terminal, can change to 'less'" >> ~/.notes.conf
 	echo 'length="$(echo $path | wc -m)" #trims the start of the path so that -f only shares filenames' >> ~/.notes.conf
+
+	#setting up ~/my-notes/example document with some general syntax help
 	echo "" >> ~/my-notes/example
 	echo "welcome to notes!" >> ~/my-notes/example
 	echo "note's options are modifiable in the ~/notes.conf file" >> ~/my-notes/example
@@ -41,13 +40,50 @@ first_run() {
 	echo "" >> ~/my-notes/example
 	echo "to see how this works, try 'notes -g query'" >> ~/my-notes/example
 	echo "also try 'notes -f ex'" >> ~/my-notes/example
+	#echo "notes also supports tab completion and therefore you can type 'notes e<tab>'" >> ~/my-notes/example
+	#echo "to suggest 'example'" >> ~/my-notes/example
+	echo "" >> ~/my-notes/example
 	echo "and finally, try notes -n 'my_note' (default: VIM), you can edit this" >> ~/my-notes/example
 	echo "by opening ~/.notes.conf and change the 'editor=' to NANO or xdg-open" >> ~/my-notes/example
 	echo "which should open in your default text program, takes commands as args" >> ~/my-notes/example
 }
 
+auto_complete() {
+		#FILE COMPLETION BLOCK:
+	#defines a longer string that can't be echoed easily
+	complete1='complete -W "$(q=($mypath); '
+	complete2="sed 's@\.md @ @g' "
+	complete3='<<<${q[@]##*/})" notes'	
+
+	# #would you like to enable tab completion?
+	echo "would you like to enable tab completion? (recommended) (y/n)" 
+	read option
+	case $option in
+		y|Y) echo "in a separate terminal window copy the following into your ~/.bashrc or whichever shell environment you're using:"
+			echo ""
+			echo "mypath=~/my-notes    # or wherever you store your notes - don't forget to update ~/.notes.conf if changing this variable"
+			echo ""
+			echo "${complete1}${complete2}${complete3}"
+			echo ""
+			echo "press return when ready to continue"
+			read placeholder
+			#echo "test reply - user selected y|Y"
+			;;
+		n|N) echo "no worries, you can always complete later - see README on how to append your bashrc with correct syntax"
+			;;
+		*) echo "non y/n answer recieved, defaulting to no change"
+			;;
+		esac
+}
+
+
+#checks to see if conf file exists, if it doesn't - assumes program has never been launched before, spins up defaults and
+#sets up ~/my-notes folder for library + places an 'example' doc in the folder
+FILENAME=~/.notes.conf
+
 if [ ! -f "$FILENAME" ]; then
    first_run
+   auto_complete
    echo "establishing default settings in ~/.notes.conf and creating default save directory in ~/my-notes"
    echo ""
    echo "try notes -h or 'notes example' for getting started"
@@ -56,10 +92,7 @@ fi
 #definitions:
 . ~/.notes.conf
 package=notes
-
-#autofill feature (currently broken) 
-complete -W "$(q=($path/*/*); sed 's@\.md @ @g' <<<${q[@]##*/})" test
-
+source ~/github/notes/notes-completion
 
 #basic run script
 while test $# -gt 0; do
