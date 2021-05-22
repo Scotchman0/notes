@@ -92,7 +92,6 @@ fi
 #definitions:
 . ~/.notes.conf
 package=notes
-source ~/github/notes/notes-completion
 
 #basic run script
 while test $# -gt 0; do
