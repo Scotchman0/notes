@@ -51,7 +51,7 @@ first_run() {
 auto_complete() {
 		#FILE COMPLETION BLOCK:
 	#defines a longer string that can't be echoed easily
-	complete1='complete -W "$(q=($mypath); '
+	complete1='complete -W "$(q=($mypath/*); '
 	complete2="sed 's@\.md @ @g' "
 	complete3='<<<${q[@]##*/})" notes'	
 
@@ -65,7 +65,7 @@ auto_complete() {
 			echo ""
 			echo "${complete1}${complete2}${complete3}"
 			echo ""
-			echo "press return when ready to continue"
+			echo "press return when ready to continue (then close/open a new shell)"
 			read placeholder
 			#echo "test reply - user selected y|Y"
 			;;
