@@ -21,7 +21,14 @@ settings (like your default save path) and preferred editor/reader are managed i
 4. type 'notes' into commandline and press return to create the default conf variables and default save location, then modify ~/.notes.conf if desired. 
 5. type 'notes -h' for help or 'notes example' for a welcome file example that provides options on getting started + basic usage.
 
-USAGE:
+# updating notes:
+1. delete ~/.notes.conf
+2. run a git pull command: $ sudo git pull
+3. call the command 'notes' if you've added the download location to your $PATH variable, or run locally: ./notes
+4. it will replace ~/.notes with an updated version (this is important -variables have been modified in versions v5 and later).
+5. use notes like normal, and reference 'notes -h' for updated use list as applicable.
+
+# USAGE:
 
 > notes [options] [arguments]
  
@@ -51,13 +58,6 @@ examples:
 > notes -n new_note --> runs vi at /path/to/notes/new_note
 
 try the command: 'notes example' for getting started
-
-# updating notes:
-1. delete ~/.notes.conf
-2. run a git pull command: $ sudo git pull
-3. call the command 'notes' if you've added the download location to your $PATH variable, or run locally: ./notes
-4. it will replace ~/.notes with an updated version (this is important -variables have been modified in versions v5 and later).
-5. use notes like normal, and reference 'notes -h' for updated use list as applicable.
 
 
 # tab auto-completion:
