@@ -41,7 +41,7 @@ search for strings inside your notes, or the names of the notes themselves
 can also supply no options and supply the exact match of the file to read the whole thing
 examples:
  
-notes examples
+# notes examples
 > notes <name_of_note> --> cat contents of <name_of_note> (default behavior)
 >
 > notes -f ex --> the following notes match this string: example ..." 
@@ -52,20 +52,20 @@ notes examples
 
 try the command: 'notes example' for getting started
 
-
+# updating notes:
+1. delete ~/.notes.conf
+2. run a git pull command: $ sudo git pull
+3. call the command 'notes' if you've added the download location to your $PATH variable, or run locally: ./notes
+4. it will replace ~/.notes with an updated version (this is important -variables have been modified in versions v5 and later).
+5. use notes like normal, and reference 'notes -h' for updated use list as applicable.
 
 
 # tab auto-completion:
 
-I tried to implement this feature in the .conf file but unless I rewrite this in python I can't call the functionality with 'complete' the way I want,
-therefore you'll need to make the following change to your shell environment for this feature.
+I have implemented a line in the ~/.notes.conf file that will enable tab completions following 'notes' command to reference the library. 
+However, it is sourced at shell launch, and requires an appendation to your ~/.bashrc or ~/.zshrc profile:
 
-Once completed, you can run notes <tab> to list all notes (replaces notes -l) and notes e<tab> to autofill to: notes example
+to enable tab completion simply follow the prompts during first time use, or if setting up later:
 
-If you'd like to enable Tab completion (which I recommend because it's way more convenient)
-you'll need to append the following lines to your ~/.bashrc or ~/.zshrc profile (or equivalent)
-
-> mypath=~/my-notes #or wherever you've updated your notes library to in ~/.notes.conf
-> 
-> complete -W "$(q=($mypath/*); sed 's@\.md @ @g' <<<${q[@]##*/})" notes
+> echo ". ~/.notes.conf" >> ~/.bashrc
 
