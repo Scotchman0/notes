@@ -41,7 +41,7 @@ search for strings inside your notes, or the names of the notes themselves
 can also supply no options and supply the exact match of the file to read the whole thing
 examples:
  
-notes examples
+# notes examples
 > notes <name_of_note> --> cat contents of <name_of_note> (default behavior)
 >
 > notes -f ex --> the following notes match this string: example ..." 
@@ -52,19 +52,20 @@ notes examples
 
 try the command: 'notes example' for getting started
 
+# updating notes:
+1. delete ~/.notes.conf
+2. run a git pull command: $ sudo git pull
+3. call the command 'notes' if you've added the download location to your $PATH variable, or run locally: ./notes
+4. it will replace ~/.notes with an updated version (this is important -variables have been modified in versions v5 and later).
+5. use notes like normal, and reference 'notes -h' for updated use list as applicable.
 
 
+# tab auto-completion:
 
-# tab auto-complete
+I have implemented a line in the ~/.notes.conf file that will enable tab completions following 'notes' command to reference the library. 
+However, it is sourced at shell launch, and requires an appendation to your ~/.bashrc or ~/.zshrc profile:
 
-you can use tab auto-completion if you run notes while inside your notes library. Generally the syntax requires 
+to enable tab completion simply follow the prompts during first time use, or if setting up later:
 
-$ notes -l
+> echo ". ~/.notes.conf" >> ~/.bashrc
 
-to list all notes, then $ notes <full_note_name> to display the contents of the file. Obviously this is inefficient,
-
-So cd into your ~/my-notes folder so that notes n+tab will autocomplete to notes nmcli_quick_detail (or other note name)
-
-I'm working on implementing tab detection into the baseline code so you can run notes from anywhere with this feature. For now, if working in other dirs, use 
-$ notes -l 
-to list the name of your notes, or notes -f "string*" to find a note title to call it up if you don't remember the note title.

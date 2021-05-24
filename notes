@@ -6,7 +6,9 @@
 #arguments are always strings (add quotes for more specific searches or when adding a space between filenames/greps)
 #will cat the contents of matching file entry in neighboring ~/bin/reference dir
 
-FILENAME=~/.notes.conf
+#cat
+#https://iridakos.com/programming/2018/03/01/bash-programmable-completion-tutorial
+#complete function
 
 #first time run block:
 first_run() {
@@ -17,13 +19,15 @@ first_run() {
 	echo "#!/bin/bash" >> ~/.notes.conf
 	echo "#notes app default settings:" >> ~/.notes.conf
 	echo "#changing the below values will modify the 'notes' command behavior" >> ~/.notes.conf
-	echo "path=~/my-notes/ #where you will save notes for query" >> ~/.notes.conf
+	echo "path=~/my-notes/ #where you will save notes for query (**include trailing /)" >> ~/.notes.conf
 	echo "editor=vi #default editor for creating new notes with -n option" >> ~/.notes.conf
 	echo "reader=cat #default, prints directly to terminal, can change to 'less'" >> ~/.notes.conf
 	echo 'length="$(echo $path | wc -m)" #trims the start of the path so that -f only shares filenames' >> ~/.notes.conf
+
+	#setting up ~/my-notes/example document with some general syntax help
 	echo "" >> ~/my-notes/example
 	echo "welcome to notes!" >> ~/my-notes/example
-	echo "note's options are modifiable in the ~/notes.conf file"
+	echo "note's options are modifiable in the ~/notes.conf file" >> ~/my-notes/example
 	echo "by default, notes opens with $CAT, but you can use 'LESS' or other text programs"  >> ~/my-notes/example
 	echo ""  >> ~/my-notes/example
 	echo "ways to get started with notes:"  >> ~/my-notes/example
@@ -36,18 +40,60 @@ first_run() {
 	echo "" >> ~/my-notes/example
 	echo "to see how this works, try 'notes -g query'" >> ~/my-notes/example
 	echo "also try 'notes -f ex'" >> ~/my-notes/example
+	#echo "notes also supports tab completion and therefore you can type 'notes e<tab>'" >> ~/my-notes/example
+	#echo "to suggest 'example'" >> ~/my-notes/example
+	echo "" >> ~/my-notes/example
 	echo "and finally, try notes -n 'my_note' (default: VIM), you can edit this" >> ~/my-notes/example
 	echo "by opening ~/.notes.conf and change the 'editor=' to NANO or xdg-open" >> ~/my-notes/example
 	echo "which should open in your default text program, takes commands as args" >> ~/my-notes/example
 }
 
+auto_complete() {
+		#FILE COMPLETION BLOCK:
+	#defines a longer string that can't be echoed easily
+	complete1='complete -W "$(q=($mypath/*); '
+	complete2="sed 's@\.md @ @g' "
+	complete3='<<<${q[@]##*/})" notes'	
+
+	# #would you like to enable tab completion?
+	echo "would you like to enable tab completion? (recommended) (y/n)" 
+	read option
+	case $option in
+		y|Y) echo "in a separate terminal window copy the following into your ~/.bashrc or whichever shell environment you're using:"
+			echo ""
+			echo "mypath=~/my-notes    # or wherever you store your notes - don't forget to update ~/.notes.conf if changing this variable"
+			echo ""
+			echo "${complete1}${complete2}${complete3}"
+			echo ""
+			echo "press return when ready to continue (then close/open a new shell)"
+			read placeholder
+			#echo "test reply - user selected y|Y"
+			;;
+		n|N) echo "no worries, you can always complete later - see README on how to append your bashrc with correct syntax"
+			;;
+		*) echo "non y/n answer recieved, defaulting to no change"
+			;;
+		esac
+}
+
+refresh_notes_list () {
+	echo "hold"
+	#insert a complete line refresh:
+	#complete -W "$(q=(~/my-notes/*); sed 's@\.md @ @g' <<<${q[@]##*/})" notes
+	#the above did not work, it would appear the only thing that works is when bash loads.
+}
+
+
+#checks to see if conf file exists, if it doesn't - assumes program has never been launched before, spins up defaults and
+#sets up ~/my-notes folder for library + places an 'example' doc in the folder
+FILENAME=~/.notes.conf
+
 if [ ! -f "$FILENAME" ]; then
    first_run
+   auto_complete
    echo "establishing default settings in ~/.notes.conf and creating default save directory in ~/my-notes"
    echo ""
    echo "try notes -h or 'notes example' for getting started"
-else
-	echo ""
 fi
 
 #definitions:
@@ -62,18 +108,23 @@ while test $# -gt 0; do
       echo " "
       echo "notes are currently being saved in $path"
       echo "$package [options] [arguments]"
+      echo "configuration settings managed in ~/.notes.conf"
       echo " "
-      echo "options:"
+      echo "OPTIONS:"
+      echo ""
       echo "-h, --help                show brief help"
-      echo "-f, --find=FIND           search for a subject string"
-      echo "-g, --grep=GREP STRING    search for any display matches inside library"
-      echo "-n, --new=NEW NOTE open default editor of choice in ~/my-notes/<note_name>"
-      echo "-l, --list= LIST NOTES    list all note titles"
+      #echo "-f, --find=FIND           search for a subject string"
+      echo "-l, --list= LIST NOTES    list all note titles (also updates TAB autocompletion list)"
+      echo "-g, --grep=GREP STRING    greps match + 2 lines following in library (-i is enabled so not exact match)"
+      echo "-n, --new=NEW NOTE/edit   opens $editor in $path<note_name>"
+      echo "-d, --delete              deletes note: notes -d <note_name> --> (ask to confirm=true)"
+      echo "-d!	--delete!			  delete without asking: notes -d! <notename>  --> (deleted)" 
       echo " "
-      echo "arguments: <string> (note title or greppable line entry)"
+      echo "ARGUMENTS: (always a string)"
       echo "examples:"
       echo " "
-      echo "$package examples"
+      echo "$package example --> cat's content of 'example'"
+      echo "$package <tab> --> lists note names (if you've enabled autocompletion)"
       echo "$package -f ex --> the following notes match this string: example ..." 
       echo "$package -g welcome= --> welcome to notes!"
       echo "$package -n new_note --> runs $editor at ${path}new_note"
@@ -82,24 +133,25 @@ while test $# -gt 0; do
       echo ""
       exit 0
       ;;
-    -f|--find)
-      shift
-      if test $# -gt 0; then
-      	echo "the following notes match this string:"
-      	echo " "
-        find $path"$@"* | cut -c $length-
-        echo " "
-        echo "run 'notes <titlename> to view"
-      else
-        echo "no string specified to look for..."
-        exit 1
-      fi
-      shift
-      ;;
+    # removed: no longer needed with tab completion and -l flag for list.
+    # -f|--find)
+    #   shift
+    #   if test $# -gt 0; then
+    #   	echo "the following notes match this string:"
+    #   	echo " "
+    #     find $path"$@"* | cut -c $length-
+    #     echo " "
+    #     echo "run 'notes <titlename> to view"
+    #   else
+    #     echo "no string specified to look for..."
+    #     exit 1
+    #   fi
+    #   shift
+    #  ;;
     -g|--grep)
       shift
       if test $# -gt 0; then
-        cat $path* | grep "$@"
+        cat $path* | grep -i -A 2 "$@" 
       else
         echo "no string supplied to grep"
         exit 1
@@ -117,7 +169,27 @@ while test $# -gt 0; do
       ;;	
     -l|--list)
         ls $path
+        refresh_notes_list
+        # incorporate some way of updating the notes db count here
+        #source ~/.zshrc 
         break
+      ;;
+    -d|--delete) ## THIS BLOCK NEEDS WORK:
+      shift
+        echo "delete '$@'? (y/n)"
+        read answer
+        case $answer in
+          y|Y)
+            rm $path"$@"
+            shift
+            echo "deleted!"
+            ;;
+          n|N)
+            shift
+            echo "cancelled delete"
+            exit 1
+            ;;
+        esac
       ;;
     *)
 	 if test $# -gt 0; then
@@ -130,3 +202,4 @@ while test $# -gt 0; do
       ;;
   esac
 done
+exit 0

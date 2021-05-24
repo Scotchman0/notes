@@ -1,0 +1,4 @@
+#!/bin/bash
+rm ~/.notes.conf
+rm ~/my-notes/example
+echo "ready for next test"
