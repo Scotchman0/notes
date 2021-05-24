@@ -25,7 +25,7 @@ settings (like your default save path) and preferred editor/reader are managed i
 1. delete ~/.notes.conf
 2. run a git pull command: $ sudo git pull
 3. call the command 'notes' if you've added the download location to your $PATH variable, or run locally: ./notes
-4. it will replace ~/.notes with an updated version (this is important -variables have been modified in versions v5 and later).
+4. it will replace ~/.notes.conf with an updated version (this is important -variables have been modified in versions v5 and later).
 5. use notes like normal, and reference 'notes -h' for updated use list as applicable.
 
 # USAGE:
