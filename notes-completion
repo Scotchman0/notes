@@ -1,0 +1,2 @@
+mypath=~/my-notes
+complete -W "$(q=($mypath/*); sed 's@\.md @ @g' <<<${q[@]##*/})" notes
