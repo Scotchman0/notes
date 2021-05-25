@@ -11,6 +11,7 @@ Feel free to use/modify/share
 # notes - your local library of quick notes
  
 notes are stored by default in ~/my-notes 
+
 settings (like your default save path) and preferred editor/reader are managed in: ~/.notes.conf
 
 # getting started with notes: 
@@ -32,14 +33,18 @@ settings (like your default save path) and preferred editor/reader are managed i
 
 > notes [options] [arguments]
  
-options: (optional)
 > -h, --help                show brief help
 > 
-> -f, --find=FIND           search for a subject string
+> -l, --list= LIST NOTES    list all note titles (tab doesn't populate until next shell launch)
 > 
-> -g, --grep=GREP STRING    search for any display matches inside library
+> -g, --grep=GREP STRING    greps match + 2 lines following in library (-i is enabled so not exact match)
 > 
-> -n, --new=NEW NOTE open default editor of choice at ~/my-notes/<note_name>
+> -n, --new=NEW NOTE/edit   opens  in <note_name>
+> 
+> -d, --delete              deletes note: notes -d <note_name> --> (ask to confirm=true)
+> 
+> -d! --delete!             delete without asking: notes -d! <notename>  --> (deleted)
+
 
 **note that you do not need to include .txt at the end of your notes (you certainly can, but when you call the file again with notes you'll need to provide the name including the .txt appendation. This may follow later, but generally it's not necessary to add this.
  
@@ -50,8 +55,6 @@ examples:
  
 # notes examples
 > notes <name_of_note> --> cat contents of <name_of_note> (default behavior)
->
-> notes -f ex --> the following notes match this string: example ..." 
 > 
 > notes -g welcome= --> welcome to notes!"
 > 
