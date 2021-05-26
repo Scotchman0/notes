@@ -66,7 +66,7 @@ try the command: 'notes example' for getting started
 # tab auto-completion:
 
 I have implemented a line in the ~/.notes.conf file that will enable tab completions following 'notes' command to reference the library. 
-However, it is sourced at shell launch, and requires an appendation to your ~/.bashrc or ~/.zshrc profile:
+However, it is sourced at shell launch, (which means your tab-list will only refresh when you launch a new shell session for now. use notes -l to see all notes if you don't want to leave session to refresh) and requires an appendation to your ~/.bashrc or ~/.zshrc profile:
 
 to enable tab completion simply follow the prompts during first time use, or if setting up later:
 
