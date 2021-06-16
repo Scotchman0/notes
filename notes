@@ -70,8 +70,7 @@ auto-executable () {
   #creates a simlink at ~/bin/notes to ensure that it's executable immediately
   #plus is ready for launch 
   mkdir ~/bin
-  current_path=echo"$pwd"
-  ln -s "${current_path}/notes/notes" ~/bin/notes
+  ln -s "$(pwd)/notes/notes" ~/bin/notes
 }
 
 auto_complete() {
@@ -104,7 +103,7 @@ FILENAME=~/.notes.conf #define conf
 if [ ! -f "$FILENAME" ]; then
    first_run
    auto_complete
-   #auto-executable
+   auto-executable
    echo "establishing default settings in ~/.notes.conf and creating default save directory in ~/my-notes"
    echo ""
    echo "try notes -h or 'notes example' for getting started"
