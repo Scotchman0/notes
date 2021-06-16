@@ -9,72 +9,51 @@
 #arguments are always strings (add quotes for more specific searches or when adding a space between filenames/greps)
 #will cat the contents of matching file entry in neighboring ~/bin/reference dir
 
+
+
 ########################################################################################
 
 #first time run block:
-first_run() {
-	#generate initial conf file + default values for editing later (but will still work if
-	#user cancels script at this point)
-	touch ~/.notes.conf
-	mkdir ~/my-notes
-	echo "#!/bin/bash" >> ~/.notes.conf
-	echo "#notes app default settings:" >> ~/.notes.conf
-	echo "#changing the below values will modify the 'notes' command behavior" >> ~/.notes.conf
-	echo "mypath=~/my-notes #where you will save notes for query (**include trailing /)" >> ~/.notes.conf
-	echo "myeditor=vi #default editor for creating new notes with -n option" >> ~/.notes.conf
-	echo "myreader=cat #default, prints directly to terminal, can change to 'less'" >> ~/.notes.conf
-	echo 'pathlength="$(echo $path | wc -m)" #trims the start of the path so that -f only shares filenames' >> ~/.notes.conf
-  echo "#the below line is used for auto-completion with tabbing. to enable this feature add the line:" >> ~/.notes.conf
-  echo "# '. ~/.notes.conf' to the bottom of your ~/.bashrc or ~/.zshrc file" >> ~/.notes.conf
-
-  #this reference allows auto-tabbing when referenced by bash profile. is surprisingly difficult to echo this into a file
-  #therefore split it up into separate parsable bits.
-  complete1='complete -W "$(q=($mypath/*); '
-  complete2="sed 's@\.md @ @g' "
-  complete3='<<<${q[@]##*/})" notes'
-  echo "${complete1}${complete2}${complete3}" >> ~/.notes.conf
-
 
 example_note_gen () {
-		#setting up ~/my-notes/example document with some general syntax help
-	echo "" >> ~/my-notes/example
-	echo "welcome to notes!" >> ~/my-notes/example
-	echo "note's options are modifiable in the ~/notes.conf file" >> ~/my-notes/example
-	echo "by default, notes opens with 'CAT', but you can use 'LESS' or other text programs"  >> ~/my-notes/example
-	echo ""  >> ~/my-notes/example
-	echo "ways to get started with notes:"  >> ~/my-notes/example
-	echo "you can create a new note with 'notes -n <note_name>" >> ~/my-notes/example
-	echo "get information about notes with notes -h" >> ~/my-notes/example
-	echo "query for note titles with 'notes -f <string*> (uses globbing)" >> ~/my-notes/example
-	echo "and grep for strings inside your notes with 'notes -g <string>" >> ~/my-notes/example
-	echo "feel free to check the wiki for more data, discussions." >> ~/my-notes/example
-	echo "have fun with notes!" >> ~/my-notes/example
-	echo "" >> ~/my-notes/example
-	echo "to see how this works, try 'notes -g query'" >> ~/my-notes/example
-
-	echo "notes also supports tab completion and therefore you can type 'notes e<tab>'" >> ~/my-notes/example
-	echo "to suggest 'example'" >> ~/my-notes/example
+    #setting up ~/my-notes/example document with some general syntax help
+  echo "" >> ~/my-notes/example
+  echo "welcome to notes!" >> ~/my-notes/example
+  echo "note's options are modifiable in the ~/notes.conf file" >> ~/my-notes/example
+  echo "by default, notes opens with 'CAT', but you can use 'LESS' or other text programs"  >> ~/my-notes/example
+  echo ""  >> ~/my-notes/example
+  echo "ways to get started with notes:"  >> ~/my-notes/example
+  echo "you can create a new note with 'notes -n <note_name>" >> ~/my-notes/example
+  echo "get information about notes with notes -h" >> ~/my-notes/example
+  echo "query for note titles with 'notes -f <string*> (uses globbing)" >> ~/my-notes/example
+  echo "and grep for strings inside your notes with 'notes -g <string>" >> ~/my-notes/example
+  echo "feel free to check the wiki for more data, discussions." >> ~/my-notes/example
+  echo "have fun with notes!" >> ~/my-notes/example
+  echo "" >> ~/my-notes/example
+  echo "to see how this works, try 'notes -g query'" >> ~/my-notes/example
+  echo "notes also supports tab completion and therefore you can type 'notes e<tab>'" >> ~/my-notes/example
+  echo "to suggest 'example'" >> ~/my-notes/example
   echo "be advised however you need to have this enabled (see readme) by appending your" >> ~/my-notes/example
   echo "bashrc profile with: '. ~/.notes.conf" >> ~/my-notes/example
-  echo "in addition, you will need to restart your shell session to have it populate" >> ~/my-notes/example	
-	echo "" >> ~/my-notes/example
-	echo "and finally, try notes -n 'my_note' (default: VIM), you can edit this" >> ~/my-notes/example
-	echo "by opening ~/.notes.conf and change the 'editor=' to NANO or xdg-open" >> ~/my-notes/example
-	echo "which should open in your default text program, takes commands as args" >> ~/my-notes/example
+  echo "in addition, you will need to restart your shell session to have it populate" >> ~/my-notes/example
+  echo "" >> ~/my-notes/example
+  echo "and finally, try notes -n 'my_note' (default: VIM), you can edit this" >> ~/my-notes/example
+  echo "by opening ~/.notes.conf and change the 'editor=' to NANO or xdg-open" >> ~/my-notes/example
+  echo "which should open in your default text program, takes commands as args" >> ~/my-notes/example
 }
 
 first_run() {
-	#generate initial conf file + default values for editing later (but will still work if
-	#user cancels script at this point)
-	touch ~/.notes.conf
-	mkdir ~/my-notes
-	echo "#!/bin/bash" >> ~/.notes.conf
-	echo "#notes app default settings:" >> ~/.notes.conf
-	echo "#changing the below values will modify the 'notes' command behavior" >> ~/.notes.conf
-	echo "mypath=~/my-notes #where you will save notes for query (leave out the trailing slash)" >> ~/.notes.conf
-	echo "myeditor=vi #default editor for creating new notes with -n option" >> ~/.notes.conf
-	echo "myreader=cat #default, prints directly to terminal, can change to 'less'" >> ~/.notes.conf
-	echo 'pathlength="$(echo $path | wc -m)" #trims the start of the path so that -f only shares filenames' >> ~/.notes.conf
+  #generate initial conf file + default values for editing later (but will still work if
+  #user cancels script at this point)
+  touch ~/.notes.conf
+  mkdir ~/my-notes
+  echo "#!/bin/bash" >> ~/.notes.conf
+  echo "#notes app default settings:" >> ~/.notes.conf
+  echo "#changing the below values will modify the 'notes' command behavior" >> ~/.notes.conf
+  echo "mypath=~/my-notes #where you will save notes for query (leave out the trailing slash)" >> ~/.notes.conf
+  echo "myeditor=vi #default editor for creating new notes with -n option" >> ~/.notes.conf
+  echo "myreader=cat #default, prints directly to terminal, can change to 'less'" >> ~/.notes.conf
+  echo 'pathlength="$(echo $path | wc -m)" #trims the start of the path so that -f only shares filenames' >> ~/.notes.conf
     echo "#the below line is used for auto-completion with tabbing. to enable this feature add the line:" >> ~/.notes.conf
     echo "# '. ~/.notes.conf' to the bottom of your ~/.bashrc or ~/.zshrc file" >> ~/.notes.conf
 
@@ -84,10 +63,10 @@ first_run() {
   complete2="sed 's@\.md @ @g' "
   complete3='<<<${q[@]##*/})" notes'
     echo "${complete1}${complete2}${complete3}" >> ~/.notes.conf
-	
+  
 
-	#placing this inside the first_run function means it hopefully shouldn't overwrite 'example' every time
-	EXAMPLE_NOTE=~/my-notes/example
+  #placing this inside the first_run function means it hopefully shouldn't overwrite 'example' every time
+  EXAMPLE_NOTE=~/my-notes/example
 if [ ! -f "$EXAMPLE_NOTE" ]; then
    example_note_gen
    echo "created an initial setup note in ~/my-notes/example"
@@ -95,26 +74,27 @@ fi
 
 }
 
+
 auto_complete() {
-	# #would you like to enable tab completion?
-	echo "would you like to enable tab completion? (recommended) (y/n)" 
-	read option
-	case $option in
-		y|Y) clear
+  # #would you like to enable tab completion?
+  echo "would you like to enable tab completion? (recommended) (y/n)" 
+  read option
+  case $option in
+    y|Y) clear
          echo "in a separate terminal window run the following line to append your ~/.bashrc or ~/.zshrc profile"
          echo ""
          echo 'echo ". ~/.notes.conf" >> ~/.bashrc'
          echo ""
          echo "this will reference the conf file where a completion line is ready formatted for tab completion on shell launch"
-			   echo "press return when ready to continue (then close/open a new shell)"
-			   read placeholder
+         echo "press return when ready to continue (then close/open a new shell)"
+         read placeholder
          clear
-			;;
-		n|N) echo "no worries, you can always complete later - see README on how to append your bashrc with correct syntax"
-			;;
-		*) echo "non y/n answer recieved, defaulting to no change"
-			;;
-		esac
+      ;;
+    n|N) echo "no worries, you can always complete later - see README on how to append your bashrc with correct syntax"
+      ;;
+    *) echo "non y/n answer recieved, defaulting to no change"
+      ;;
+    esac
 }
 
 
@@ -178,12 +158,12 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
     -n|--new) #create new note or edit existing note (*if specify exact note name)
       shift
       if test $# -gt 0; then
-      	$myeditor $mypath/"$@"
+        $myeditor $mypath/"$@"
       else
-      	echo "need to specify a new/existing file name"
+        echo "need to specify a new/existing file name"
       fi
       shift
-      ;;	
+      ;;  
     -l|--list) #list all note names for reference (useful when you've created new notes and haven't refreshed session for tab-complete)
         ls $mypath
         break
@@ -211,13 +191,13 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
       shift
      ;;
     *)
-	 if test $# -gt 0; then
-	 	$myreader $mypath/"$@"
-	 	break
-	 else
-	 	echo "try notes example or 'notes -h'"
-	  break
-	fi
+   if test $# -gt 0; then
+    $myreader $mypath/"$@"
+    break
+   else
+    echo "try notes example or 'notes -h'"
+    break
+  fi
       ;;
   esac
 done
