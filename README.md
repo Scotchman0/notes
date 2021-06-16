@@ -17,8 +17,11 @@ settings (like your default save path) and preferred editor/reader are managed i
 # getting started with notes: 
 1. clone this repository
 2. make notes executable with $ sudo chmod a+x ./notes
-3. copy or move notes into /usr/bin, or, add the install directory to your path for calling later:
-> sudo export PATH=${PATH}:/path/to/this/executable
+3. make a softlink in ~/bin:
+> ln -s ~/path/to/github/notes/notes ~/bin
+
+this makes the executable 'notes' immediately available and as long as you don't move the github folder later you can keep calling it/run the latest whenever you git pull the latest updates as applicable.
+
 4. type 'notes' into commandline and press return to create the default conf variables and default save location, then modify ~/.notes.conf if desired. 
 5. type 'notes -h' for help or 'notes example' for a welcome file example that provides options on getting started + basic usage.
 
@@ -36,6 +39,7 @@ settings (like your default save path) and preferred editor/reader are managed i
 > -h, --help                show brief help
 > 
 > -l, --list= LIST NOTES    list all note titles (tab doesn't populate until next shell launch)
+
 > 
 > -g, --grep=GREP STRING    greps match + 2 lines following in library (-i is enabled so not exact match)
 > 
@@ -66,7 +70,7 @@ try the command: 'notes example' for getting started
 # tab auto-completion:
 
 I have implemented a line in the ~/.notes.conf file that will enable tab completions following 'notes' command to reference the library. 
-However, it is sourced at shell launch, and requires an appendation to your ~/.bashrc or ~/.zshrc profile:
+However, it is sourced at shell launch, (which means your tab-list will only refresh when you launch a new shell session for now. use notes -l to see all notes if you don't want to leave session to refresh) and requires an appendation to your ~/.bashrc or ~/.zshrc profile:
 
 to enable tab completion simply follow the prompts during first time use, or if setting up later:
 
