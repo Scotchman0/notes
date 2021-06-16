@@ -39,6 +39,7 @@ this makes the executable 'notes' immediately available and as long as you don't
 > -h, --help                show brief help
 > 
 > -l, --list= LIST NOTES    list all note titles (tab doesn't populate until next shell launch)
+
 > 
 > -g, --grep=GREP STRING    greps match + 2 lines following in library (-i is enabled so not exact match)
 > 
