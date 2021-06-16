@@ -1,10 +1,17 @@
 #!/bin/bash
 #reference table for quicknotes similar to tldr but for specific function calls
+#Author: Will Russell (Scotchman0)
+#Version: 5.2
+#Patch date: 6/16/21
 
 #basic usage: notes [option] [argument]
 #options listed below in -h case segment
 #arguments are always strings (add quotes for more specific searches or when adding a space between filenames/greps)
 #will cat the contents of matching file entry in neighboring ~/bin/reference dir
+
+
+
+########################################################################################
 
 #first time run block:
 
@@ -13,7 +20,7 @@ example_note_gen () {
 	echo "" >> ~/my-notes/example
 	echo "welcome to notes!" >> ~/my-notes/example
 	echo "note's options are modifiable in the ~/notes.conf file" >> ~/my-notes/example
-	echo "by default, notes opens with $CAT, but you can use 'LESS' or other text programs"  >> ~/my-notes/example
+	echo "by default, notes opens with 'CAT', but you can use 'LESS' or other text programs"  >> ~/my-notes/example
 	echo ""  >> ~/my-notes/example
 	echo "ways to get started with notes:"  >> ~/my-notes/example
 	echo "you can create a new note with 'notes -n <note_name>" >> ~/my-notes/example
@@ -24,9 +31,11 @@ example_note_gen () {
 	echo "have fun with notes!" >> ~/my-notes/example
 	echo "" >> ~/my-notes/example
 	echo "to see how this works, try 'notes -g query'" >> ~/my-notes/example
-	echo "also try 'notes -f ex'" >> ~/my-notes/example
 	echo "notes also supports tab completion and therefore you can type 'notes e<tab>'" >> ~/my-notes/example
 	echo "to suggest 'example'" >> ~/my-notes/example
+  echo "be advised however you need to have this enabled (see readme) by appending your" >> ~/my-notes/example
+  echo "bashrc profile with: '. ~/.notes.conf" >> ~/my-notes/example
+  echo "in addition, you will need to restart your shell session to have it populate" >> ~/my-notes/example
 	echo "" >> ~/my-notes/example
 	echo "and finally, try notes -n 'my_note' (default: VIM), you can edit this" >> ~/my-notes/example
 	echo "by opening ~/.notes.conf and change the 'editor=' to NANO or xdg-open" >> ~/my-notes/example
@@ -65,13 +74,6 @@ fi
 
 }
 
-#currently broken
-auto-executable () {
-  #creates a simlink at ~/bin/notes to ensure that it's executable immediately
-  #plus is ready for launch 
-  mkdir ~/bin
-  ln -s "$(pwd)/notes/notes" ~/bin/notes
-}
 
 auto_complete() {
 	# #would you like to enable tab completion?
@@ -103,7 +105,6 @@ FILENAME=~/.notes.conf #define conf
 if [ ! -f "$FILENAME" ]; then
    first_run
    auto_complete
-   auto-executable
    echo "establishing default settings in ~/.notes.conf and creating default save directory in ~/my-notes"
    echo ""
    echo "try notes -h or 'notes example' for getting started"
