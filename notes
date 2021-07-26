@@ -53,7 +53,7 @@ first_run() {
   echo "mypath=~/my-notes #where you will save notes for query (leave out the trailing slash)" >> ~/.notes.conf
   echo "myeditor=vi #default editor for creating new notes with -n option" >> ~/.notes.conf
   echo "myreader=cat #default, prints directly to terminal, can change to 'less'" >> ~/.notes.conf
-  echo 'pathlength="$(echo $path | wc -m)" #trims the start of the path so that -f only shares filenames' >> ~/.notes.conf
+  echo 'pathlength="$(echo $mypath/ | wc -m)" #trims the start of the path so that -f only shares filenames' >> ~/.notes.conf
     echo "#the below line is used for auto-completion with tabbing. to enable this feature add the line:" >> ~/.notes.conf
     echo "# '. ~/.notes.conf' to the bottom of your ~/.bashrc or ~/.zshrc file" >> ~/.notes.conf
 
@@ -129,6 +129,7 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
       echo " -h, --help                show brief help"
       echo " -l, --list= LIST NOTES    list all note titles (tab doesn't populate until next shell launch)"
       echo " -g, --grep=GREP STRING    greps match + 2 lines following in library (-i is enabled so not exact match)"
+      echo " -k, --search              searches for string match (use quotes) and displays note titles with positive hit"
       echo " -n, --new=NEW NOTE/edit   opens $editor in $path<note_name>"
       echo " -d, --delete              deletes note: notes -d <note_name> --> (ask to confirm=true)"
       echo " -d! --delete!             delete without asking: notes -d! <notename>  --> (deleted)" 
@@ -148,9 +149,10 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
     -g|--grep) #cat's inexact match + 2 following lines on context. 
       shift
       if test $# -gt 0; then
-        cat $mypath/* | grep -i -A 2 "$@" 
+        cat $mypath/* | grep -i -A 2 "$@"
+        #grep -i -A 2 $@ $mypath/*
       else
-        echo "no string supplied to grep"
+        echo "no match found, try again with quotes or adjust query (or try -k with search parameters)"
         exit 1
       fi
       shift
@@ -168,6 +170,15 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
         ls $mypath
         break
       ;;
+    -k|--search) #search for string and provide note name of notes that match string for review (man search functionality)
+        shift
+        if test $# -gt 0; then
+          grep -i -l "$@" $mypath/* | cut -c $pathlength-
+        else
+          echo "no match found, try again with quotes or adjust query"
+        fi
+        break
+        ;;
     -d|--delete) #delete and ask
       shift
         echo "delete '$@'? (y/n)"
