@@ -149,8 +149,8 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
     -g|--grep) #cat's inexact match + 2 following lines on context. 
       shift
       if test $# -gt 0; then
-        cat $mypath/* | grep -i -A 2 "$@"
-        #grep -i -A 2 $@ $mypath/*
+        #cat $mypath/* | grep -i -A 2 "$@"
+        grep -i -A 2 $@ $mypath/* | cut -c $pathlength-
       else
         echo "no match found, try again with quotes or adjust query (or try -k with search parameters)"
         exit 1
