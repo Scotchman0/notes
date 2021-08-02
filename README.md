@@ -1,8 +1,6 @@
 # notes
 simple CLI notes-app, for quick-reference on the fly, like TLDR but with your own entries for faster lookup
 
-Written while I was supposed to be studying for the RHCSA so this is my public reminder that I need to actually do that instead of tinkering with scripts)
-
 Feel free to use/modify/share
 
 ~WR/Scotchman0
