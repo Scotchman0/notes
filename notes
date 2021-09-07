@@ -25,7 +25,6 @@ example_note_gen () {
   echo "ways to get started with notes:"  >> ~/my-notes/example
   echo "you can create a new note with 'notes -n <note_name>" >> ~/my-notes/example
   echo "get information about notes with notes -h" >> ~/my-notes/example
-  echo "query for note titles with 'notes -f <string*> (uses globbing)" >> ~/my-notes/example
   echo "and grep for strings inside your notes with 'notes -g <string>" >> ~/my-notes/example
   echo "feel free to check the wiki for more data, discussions." >> ~/my-notes/example
   echo "have fun with notes!" >> ~/my-notes/example
@@ -38,7 +37,7 @@ example_note_gen () {
   echo "in addition, you will need to restart your shell session to have it populate" >> ~/my-notes/example
   echo "" >> ~/my-notes/example
   echo "and finally, try notes -n 'my_note' (default: VIM), you can edit this" >> ~/my-notes/example
-  echo "by opening ~/.notes.conf and change the 'editor=' to NANO or xdg-open" >> ~/my-notes/example
+  echo "by opening ~/.notes.conf and change the 'editor=' to NANO, xdg-open, subl" >> ~/my-notes/example
   echo "which should open in your default text program, takes commands as args" >> ~/my-notes/example
 }
 
