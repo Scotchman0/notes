@@ -12,6 +12,7 @@ notes are stored by default in ~/my-notes
 
 settings (like your default save path) and preferred editor/reader are managed in: ~/.notes.conf
 
+
 # getting started with notes: 
 1. clone this repository
 2. make notes executable with $ sudo chmod a+x ./notes
@@ -49,6 +50,8 @@ this makes the executable 'notes' immediately available and as long as you don't
 >
 > notes <notename>          print contents of note to cli (or open less|subl|reader if you've modified this option in ~/.notes.conf)
 
+ 
+ ![Screenshot_20210824_122451](https://user-images.githubusercontent.com/35974491/130654524-59f26288-1fba-44a8-b461-162695795020.png)
 
 **note that you do not need to include .txt at the end of your notes (you certainly can, but when you call the file again with notes you'll need to provide the name including the .txt appendation. This may follow later, but generally it's not necessary to add this.
  
@@ -75,4 +78,8 @@ However, it is sourced at shell launch, (which means your tab-list will only ref
 to enable tab completion simply follow the prompts during first time use, or if setting up later:
 
 > echo ". ~/.notes.conf" >> ~/.bashrc
-
+ 
+ 
+ # EXAMPLE of quick recall/match/grep features:
+ 
+![Screenshot_20210824_122737](https://user-images.githubusercontent.com/35974491/130654683-d4eb0a44-6300-4509-9d38-e08c88211d09.png)
