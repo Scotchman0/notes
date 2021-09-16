@@ -48,7 +48,7 @@ this makes the executable 'notes' immediately available and as long as you don't
 > 
 > -d! --delete!             delete without asking: notes -d! <notename>  --> (deleted)
 >
-> notes <notename>          print contents of note to cli (or open less|subl|reader if you've modified this option in ~/.notes.conf)
+> notes [notename]          print contents of note to cli (or open less|subl|reader if you've modified this option in ~/.notes.conf)
 
  
  ![Screenshot_20210824_122451](https://user-images.githubusercontent.com/35974491/130654524-59f26288-1fba-44a8-b461-162695795020.png)
