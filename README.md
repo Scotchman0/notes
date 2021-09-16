@@ -49,7 +49,7 @@ this makes the executable 'notes' immediately available and as long as you don't
 > 
 > -d! --delete!             delete without asking: notes -d! <notename>  --> (deleted)
 >
-> notes <notename>          print contents of note to cli (or open less|subl|reader if you've modified this option in ~/.notes.conf)
+> notes [notename]          print contents of note to cli (or open less|subl|reader if you've modified this option in ~/.notes.conf)
 
 
 **note that you do not need to include .txt at the end of your notes (you certainly can, but when you call the file again with notes you'll need to provide the name including the .txt appendation. This may follow later, but generally it's not necessary to add this.
