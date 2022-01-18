@@ -133,7 +133,8 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
       echo " -l, --list= LIST NOTES    list all note titles (tab doesn't populate until next shell launch)"
       echo " -g, --grep=GREP STRING    greps match + 2 lines following in library (-i is enabled so not exact match)"
       echo " -k, --search              searches for string match (use quotes) and displays note titles with positive hit"
-      echo " -n, --new=NEW NOTE/edit   opens $editor in $path<note_name>"
+      echo " -n, --new=NEW NOTE/edit   opens $editor in $path<note_name> (sets a filetype extension if set in settings)"
+      echo " -e, --edit                opens $editor in $path<note_name> but does not append a filetype extension"
       echo " -d, --delete              deletes note: notes -d <note_name> --> (ask to confirm=true)"
       echo " -d! --delete!             delete without asking: notes -d! <notename>  --> (deleted)" 
       echo " "
@@ -168,7 +169,16 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
         echo "need to specify a new/existing file name"
       fi
       shift
-      ;;  
+      ;;
+    -e|--edit) #edit existing note
+      shift
+      if test $# -gt 0; then
+        $myeditor $mypath/"$@"
+      else
+        echo "need to specify an existing filename"  
+      fi
+      break
+      ;;
     -l|--list) #list all note names for reference (useful when you've created new notes and haven't refreshed session for tab-complete)
         ls $mypath
         break
