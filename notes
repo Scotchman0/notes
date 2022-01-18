@@ -53,8 +53,10 @@ first_run() {
   echo "myeditor=vi #default editor for creating new notes with -n option" >> ~/.notes.conf
   echo "myreader=cat #default, prints directly to terminal, can change to 'less'" >> ~/.notes.conf
   echo 'pathlength="$(echo $mypath/ | wc -m)" #trims the start of the path so that -k only shares filenames' >> ~/.notes.conf
-    echo "#the below line is used for auto-completion with tabbing. to enable this feature add the line:" >> ~/.notes.conf
-    echo "# '. ~/.notes.conf' to the bottom of your ~/.bashrc or ~/.zshrc file" >> ~/.notes.conf
+  echo 'notes_extension=.md #sets notes as markdown (default) for easy export, can update to .log/.txt/etc' >> ~/.notes.conf
+  echo '#the note_extension can also be left blank, it is not required to set a filetype for notes to read data by default' >> ~/.notes.conf
+  echo "#the below line is used for auto-completion with tabbing. to enable this feature add the line:" >> ~/.notes.conf
+  echo "# '. ~/.notes.conf' to the bottom of your ~/.bashrc or ~/.zshrc file" >> ~/.notes.conf
 
   #this reference allows auto-tabbing when referenced by bash profile. is surprisingly difficult to echo this into a file
   #therefore split it up into separate parsable bits.
@@ -122,6 +124,8 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
       echo "notes are currently being saved in $mypath"
       echo "$package [options] [arguments]"
       echo "configuration settings managed in ~/.notes.conf"
+      echo "configuration settings managed in ~/.notes.conf"
+      echo "change options can be set by running 'notes settings' or manually editing this file"
       echo " "
       echo "OPTIONS:"
       echo ""
@@ -159,7 +163,7 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
     -n|--new) #create new note or edit existing note (*if specify exact note name)
       shift
       if test $# -gt 0; then
-        $myeditor $mypath/"$@"
+        $myeditor $mypath/"$@""$notes_extension"
       else
         echo "need to specify a new/existing file name"
       fi
@@ -200,6 +204,11 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
         rm $mypath/"$@"
       shift
      ;;
+    settings) #launch editor on local settings panel
+      shift
+      $myeditor ~/.notes.conf
+      break
+      ;;
     *)
    if test $# -gt 0; then
     $myreader $mypath/"$@"
