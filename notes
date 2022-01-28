@@ -53,7 +53,7 @@ first_run() {
   echo "myeditor=vi #default editor for creating new notes with -n option" >> ~/.notes.conf
   echo "myreader=cat #default, prints directly to terminal, can change to 'less'" >> ~/.notes.conf
   echo 'pathlength="$(echo $mypath/ | wc -m)" #trims the start of the path so that -k only shares filenames' >> ~/.notes.conf
-  echo 'notes_extension=.md #sets notes as markdown (default) for easy export, can update to .log/.txt/etc' >> ~/.notes.conf
+  echo 'notes_extension= #left blank (default) can update a default for easy export - accepts .md|.log|.txt|etc' >> ~/.notes.conf
   echo '#the note_extension can also be left blank, it is not required to set a filetype for notes to read data by default' >> ~/.notes.conf
   echo "#the below line is used for auto-completion with tabbing. to enable this feature add the line:" >> ~/.notes.conf
   echo "# '. ~/.notes.conf' to the bottom of your ~/.bashrc or ~/.zshrc file" >> ~/.notes.conf
@@ -129,6 +129,7 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
       echo " "
       echo "OPTIONS:"
       echo ""
+      echo " settings                  opens the ~/.notes.conf file for modification"
       echo " -h, --help                show brief help"
       echo " -l, --list= LIST NOTES    list all note titles (tab doesn't populate until next shell launch)"
       echo " -g, --grep=GREP STRING    greps match + 2 lines following in library (-i is enabled so not exact match)"

@@ -1,10 +1,16 @@
 # notes
 simple CLI notes-app, for quick-reference on the fly, like TLDR but with your own entries for faster lookup
 
-Feel free to use/modify/share
+Feel free to use/modify/share/contribute
 
 ~WR/Scotchman0
 
+
+# LATEST UPDATE PATCH: 1/28/21
+- have added options: 'notes settings' (opens ~/.notes.conf for option config) 
+- added an option for default file extension notes_extension='' (default empty to not break existing use cases) can include .md or .txt etc to save new files as those extensions (handy if syncing elsewhere)
+- removed notes_extension=.md (set default as blank instead) because I noticed that editing with -n would open a new file
+- added notes -e option for 'edit' which does the same thing as editing a file and not appending a file-extension for access also (this is sort of superfluous if you aren't using file-extensions by default)
 
 # notes - your local library of quick notes
  
@@ -34,6 +40,8 @@ this makes the executable 'notes' immediately available and as long as you don't
 # USAGE:
 
 > notes [options] [arguments]
+
+> settings                  opens the ~/.notes.conf file for modifications
  
 > -h, --help                show brief help
 > 
