@@ -6,7 +6,7 @@ Feel free to use/modify/share/contribute
 ~WR/Scotchman0
 
 
-# LATEST UPDATE PATCH: 1/28/21
+# LATEST UPDATE PATCH: 1/28/22
 - have added options: 'notes settings' (opens ~/.notes.conf for option config) 
 - added an option for default file extension notes_extension='' (default empty to not break existing use cases) can include .md or .txt etc to save new files as those extensions (handy if syncing elsewhere)
 - removed notes_extension=.md (set default as blank instead) because I noticed that editing with -n would open a new file
