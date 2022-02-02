@@ -6,11 +6,9 @@ Feel free to use/modify/share/contribute
 ~WR/Scotchman0
 
 
-# LATEST UPDATE PATCH: 1/28/22
-- have added options: 'notes settings' (opens ~/.notes.conf for option config) 
-- added an option for default file extension notes_extension='' (default empty to not break existing use cases) can include .md or .txt etc to save new files as those extensions (handy if syncing elsewhere)
-- removed notes_extension=.md (set default as blank instead) because I noticed that editing with -n would open a new file
-- added notes -e option for 'edit' which does the same thing as editing a file and not appending a file-extension for access also (this is sort of superfluous if you aren't using file-extensions by default)
+# LATEST UPDATE PATCH: 2/2/22 (minor)
+- updated README.MD for more clarification on use options and getting started
+- modified ~/.notes.conf variables with clarifications of options on install
 
 # notes - your local library of quick notes
  
@@ -18,14 +16,22 @@ notes are stored by default in ~/my-notes
 
 settings (like your default save path) and preferred editor/reader are managed in: ~/.notes.conf
 
+you can edit the file directly with `notes settings`
+
+# Options you can configure:
+- Reader selection: uses CAT by default to print to cli, but can update to any other binary/executable or option set like 'glow -p' 'less' 'xdg_open' 'firefox' for example
+- editor: defaults to vi for universal access, but can be updated to anything that can write to text: nano, subl, etc
+- default file extension (default null) can define that notes save as markdown, txt, log, etc. 
+- path to save notes in: defaults to ~/my-notes/ but you can redirect this anywhere more convenient like a common directory or secure log location.
+
 
 # getting started with notes: 
 1. clone this repository
 2. make notes executable with $ sudo chmod a+x ./notes
 3. make a softlink in ~/bin:
-> ln -s ~/path/to/github/notes/notes ~/bin
+> ln -s ~/path/to/github/notes/notes ~/bin/notes
 
-this makes the executable 'notes' immediately available and as long as you don't move the github folder later you can keep calling it/run the latest whenever you git pull the latest updates as applicable.
+this makes the executable 'notes' immediately available if ~/bin is a part of your $PATH
 
 4. type 'notes' into commandline and press return to create the default conf variables and default save location, then modify ~/.notes.conf if desired. 
 5. type 'notes -h' for help or 'notes example' for a welcome file example that provides options on getting started + basic usage.
@@ -46,22 +52,23 @@ this makes the executable 'notes' immediately available and as long as you don't
 > -h, --help                show brief help
 > 
 > -l, --list= LIST NOTES    list all note titles (tab doesn't populate until next shell launch)
-
 > 
 > -g, --grep=GREP STRING    greps match + 2 lines following in library (-i is enabled so not exact match)
 > 
-> -n, --new=NEW NOTE/edit   opens  in <note_name>
+> -n, --new=NEW NOTE/edit   opens in <note_name> with editor selection (appends filetype selection if defined in settings)
 > 
+> -e, --edit                opens <note_name> with editor selection (does not append filetype selection in case you have mixed file appendations)
+>
 > -d, --delete              deletes note: notes -d <note_name> --> (ask to confirm=true)
 > 
 > -d! --delete!             delete without asking: notes -d! <notename>  --> (deleted)
 >
-> notes [notename]          print contents of note to cli (or open less|subl|reader if you've modified this option in ~/.notes.conf)
+> [notename]                print contents of note to cli (or open less|subl|reader if you've modified this option in ~/.notes.conf)
+
 
  
  ![Screenshot_20210824_122451](https://user-images.githubusercontent.com/35974491/130654524-59f26288-1fba-44a8-b461-162695795020.png)
 
-**note that you do not need to include .txt at the end of your notes (you certainly can, but when you call the file again with notes you'll need to provide the name including the .txt appendation. This may follow later, but generally it's not necessary to add this.
  
 arguments:
 search for strings inside your notes, or the names of the notes themselves
@@ -73,7 +80,7 @@ examples:
 > 
 > notes -g welcome= --> welcome to notes!"
 > 
-> notes -n new_note --> runs vi at /path/to/notes/new_note
+> notes -n new_note --> runs vi or your editor binary/app at ~/my-notes/new_note
 
 try the command: 'notes example' for getting started
 

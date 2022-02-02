@@ -51,7 +51,7 @@ first_run() {
   echo "#changing the below values will modify the 'notes' command behavior" >> ~/.notes.conf
   echo "mypath=~/my-notes #where you will save notes for query (leave out the trailing slash)" >> ~/.notes.conf
   echo "myeditor=vi #default editor for creating new notes with -n option" >> ~/.notes.conf
-  echo "myreader=cat #default, prints directly to terminal, can change to 'less'" >> ~/.notes.conf
+  echo "myreader=cat #cat is default, can change to any other view option like less|subl|glow|<your_reader_app> - accepts quoted commands" >> ~/.notes.conf
   echo 'pathlength="$(echo $mypath/ | wc -m)" #trims the start of the path so that -k only shares filenames' >> ~/.notes.conf
   echo 'notes_extension= #left blank (default) can update a default for easy export - accepts .md|.log|.txt|etc' >> ~/.notes.conf
   echo '#the note_extension can also be left blank, it is not required to set a filetype for notes to read data by default' >> ~/.notes.conf
