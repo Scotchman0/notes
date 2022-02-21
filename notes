@@ -220,6 +220,13 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
       $myeditor ~/.notes.conf
       break
       ;;
+    print) #dump contents of note straight to stdout (useful if you've set default notes command to 'less/more/tail' or another buffer)
+      shift
+      if test $# -gt 0; then
+        cat $mypath/"$@" #edit this later to include a variable option for actually PRINTING the file
+        break
+      fi
+      ;;
     *)
    if test $# -gt 0; then
     $myreader $mypath/"$@"
