@@ -134,10 +134,11 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
       echo " -l, --list= LIST NOTES    list all note titles (tab doesn't populate until next shell launch)"
       echo " -g, --grep=GREP STRING    greps match + 2 lines following in library (-i is enabled so not exact match)"
       echo " -k, --search              searches for string match (use quotes) and displays note titles with positive hit"
-      echo " -n, --new=NEW NOTE/edit   opens $editor in $path<note_name> (sets a filetype extension if set in settings)"
-      echo " -e, --edit                opens $editor in $path<note_name> but does not append a filetype extension"
+      echo " -n, --new=NEW NOTE/edit   opens $myeditor in ${mypath}/<note_name> (sets a filetype extension if set in settings)"
+      echo " -e, --edit                opens $myeditor in ${mypath}/<note_name> but does not append a filetype extension"
       echo " -d, --delete              deletes note: notes -d <note_name> --> (ask to confirm=true)"
       echo " -d! --delete!             delete without asking: notes -d! <notename>  --> (deleted)" 
+      echo " -p | --print | print      prints content of note directly to stdout instead of opening it with a reader for copy/paste"
       echo " "
       echo "ARGUMENTS: (always a string)"
       echo "examples:"
@@ -145,13 +146,14 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
       echo "$package example --> cat's content of 'example'"
       echo "$package <tab> --> lists note names (if you've enabled autocompletion)"
       echo "$package -g welcome= --> welcome to notes!"
-      echo "$package -n new_note --> runs $myeditor at ${mypath}new_note"
+      echo "$package -n new_note --> runs $myeditor at ${mypath}/new_note"
       echo ""
       echo "try the command: 'notes example'"
       echo ""
       exit 0
       ;;
     -g|--grep) #cat's inexact match + 2 following lines on context. 
+      #usage: notes -g "<string>" --> pulls matching phrase + 2 appended lines from existing notes + lists note name
       shift
       if test $# -gt 0; then
         #cat $mypath/* | grep -i -A 2 "$@"
@@ -163,6 +165,7 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
       shift
       ;;
     -n|--new) #create new note or edit existing note (*if specify exact note name)
+       #usage: notes -n new_note_<date> --> creates a new file and opens it with selected editor (vim/nano)
       shift
       if test $# -gt 0; then
         $myeditor $mypath/"$@""$notes_extension"
@@ -172,6 +175,7 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
       shift
       ;;
     -e|--edit) #edit existing note
+       #usage: notes -e tcpdump_examples --> opens editor selection (vim/nano) on existing file.
       shift
       if test $# -gt 0; then
         $myeditor $mypath/"$@"
@@ -181,10 +185,12 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
       break
       ;;
     -l|--list) #list all note names for reference (useful when you've created new notes and haven't refreshed session for tab-complete)
+       #usage: notes -l --> list all notes
         ls $mypath
         break
       ;;
     -k|--search) #search for string and provide note name of notes that match string for review (man search functionality)
+        #usage: notes -k tcpdump --> list notes that include keyword IN the note contents, not just note-name
         shift
         if test $# -gt 0; then
           grep -i -l "$@" $mypath/* | cut -c $pathlength-
@@ -194,6 +200,7 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
         break
         ;;
     -d|--delete) #delete and ask
+      #usage: notes -d <notename> --> delete file but ask for confirmation before execution of rm.
       shift
         echo "delete '$@'? (y/n)"
         read answer
@@ -211,16 +218,19 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
         esac
       ;;
     -d!|--delete!) #delete without asking
+     #usage: notes -d! <notename> --> immediate deletion of file selected at path if found.
      shift
         rm $mypath/"$@"
       shift
      ;;
     settings) #launch editor on local settings panel
+      #usage: notes settings --> launch selected editor program (vim/nano) on ~/.notes.conf
       shift
       $myeditor ~/.notes.conf
       break
       ;;
-    print) #dump contents of note straight to stdout (useful if you've set default notes command to 'less/more/tail' or another buffer)
+    -p | --print | print) #dump contents of note straight to stdout (useful if you've set default notes command to 'less/more/tail' or another buffer)
+      #usage: notes -p notes_on_tcpdump --> stdout contents of note.
       shift
       if test $# -gt 0; then
         cat $mypath/"$@" #edit this later to include a variable option for actually PRINTING the file
