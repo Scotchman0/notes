@@ -5,11 +5,6 @@ Feel free to use/modify/share/contribute
 
 ~WR/Scotchman0
 
-
-# LATEST UPDATE PATCH: 2/2/22 (minor)
-- updated README.MD for more clarification on use options and getting started
-- modified ~/.notes.conf variables with clarifications of options on install
-
 # notes - your local library of quick notes
  
 notes are stored by default in ~/my-notes 
