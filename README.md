@@ -14,6 +14,7 @@ settings (like your default save path) and preferred editor/reader are managed i
 you can edit the file directly with `notes settings`
 
 # Options you can configure:
+`notes settings` to open the settings panel and change the following:
 - Reader selection: uses CAT by default to print to cli, but can update to any other binary/executable or option set like 'glow -p' 'less' 'xdg_open' 'firefox' for example
 - editor: defaults to vi for universal access, but can be updated to anything that can write to text: nano, subl, etc
 - default file extension (default null) can define that notes save as markdown, txt, log, etc. 
