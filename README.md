@@ -41,42 +41,29 @@ this makes the executable 'notes' immediately available if ~/bin is a part of yo
 
 # USAGE:
 
-> notes [options] [arguments]
+`notes {options} {note-name}`
 
-> settings                  opens the ~/.notes.conf file for modifications
- 
-> -h, --help                show brief help
-> 
-> -l, --list= LIST NOTES    list all note titles (tab doesn't populate until next shell launch)
-> 
-> -g, --grep=GREP STRING    greps match + 2 lines following in library (-i is enabled so not exact match)
-> 
-> -n, --new=NEW NOTE/edit   opens in <note_name> with editor selection (appends filetype selection if defined in settings)
-> 
-> -e, --edit                opens <note_name> with editor selection (does not append filetype selection in case you have mixed file appendations)
->
-> -d, --delete              deletes note: notes -d <note_name> --> (ask to confirm=true)
-> 
-> -d! --delete!             delete without asking: notes -d! <notename>  --> (deleted)
->
-> [notename]                print contents of note to cli (or open less|subl|reader if you've modified this option in ~/.notes.conf)
+
+
+ settings                  opens the ~/.notes.conf file for modification
+ -h, --help                show brief help
+ -l, --list= LIST NOTES    list all note titles (tab doesn't populate until next shell launch)
+ -g, --grep=GREP STRING    greps match + 2 lines following in library (-i is enabled so not exact match)
+ -k, --search              searches for string match (use quotes) and displays note titles with positive hit
+ -n, --new=NEW NOTE/edit   opens vim in /home/sunbro/my-notes/<note_name> (sets a filetype extension if set in settings)
+ -e, --edit                opens vim in /home/sunbro/my-notes/<note_name> but does not append a filetype extension
+ -d, --delete              deletes note: notes -d <note_name> --> (ask to confirm=true)
+ -d! --delete!             delete without asking: notes -d! <notename>  --> (deleted)
+ -p  --print | print       prints content of note directly to stdout instead of opening it with a reader for copy/paste
+
+examples: 
+`notes -n testnote` #create (or edit) a note named: `testnote`
+`notes settings` #open settings panel for adjusted configuration options
 
 
  
  ![Screenshot_20210824_122451](https://user-images.githubusercontent.com/35974491/130654524-59f26288-1fba-44a8-b461-162695795020.png)
-
  
-arguments:
-search for strings inside your notes, or the names of the notes themselves
-can also supply no options and supply the exact match of the file to read the whole thing
-examples:
- 
-# notes examples
-> notes <name_of_note> --> cat contents of <name_of_note> (default behavior)
-> 
-> notes -g welcome= --> welcome to notes!"
-> 
-> notes -n new_note --> runs vi or your editor binary/app at ~/my-notes/new_note
 
 try the command: 'notes example' for getting started
 

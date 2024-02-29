@@ -16,7 +16,7 @@
 #first time run block:
 
 example_note_gen () {
-    #setting up ~/my-notes/example document with some general syntax help
+  #setting up ~/my-notes/example document with some general syntax help
   echo "" >> ~/my-notes/example
   echo "welcome to notes!" >> ~/my-notes/example
   echo "note's options are modifiable in the ~/notes.conf file" >> ~/my-notes/example
@@ -127,6 +127,10 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
       echo "configuration settings managed in ~/.notes.conf"
       echo "change options can be set by running 'notes settings' or manually editing this file"
       echo " "
+      echo "USAGE:"
+      echo " "
+      echo "notes {options} {target-note-name}"
+      echo " "
       echo "OPTIONS:"
       echo ""
       echo " settings                  opens the ~/.notes.conf file for modification"
@@ -138,15 +142,16 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
       echo " -e, --edit                opens $myeditor in ${mypath}/<note_name> but does not append a filetype extension"
       echo " -d, --delete              deletes note: notes -d <note_name> --> (ask to confirm=true)"
       echo " -d! --delete!             delete without asking: notes -d! <notename>  --> (deleted)" 
-      echo " -p | --print | print      prints content of note directly to stdout instead of opening it with a reader for copy/paste"
+      echo " -p  --print | print       prints content of note directly to stdout instead of opening it with a reader for copy/paste"
       echo " "
-      echo "ARGUMENTS: (always a string)"
-      echo "examples:"
+      echo "{target-note-name}: (always a string)"
       echo " "
-      echo "$package example --> cat's content of 'example'"
-      echo "$package <tab> --> lists note names (if you've enabled autocompletion)"
-      echo "$package -g welcome= --> welcome to notes!"
-      echo "$package -n new_note --> runs $myeditor at ${mypath}/new_note"
+      echo "example usage:"
+      echo " "
+      echo "$package example #print the content of the note named 'example to stdout (or open with less, if configured in settings)"
+      echo "$package a + <tab> # lists note names starting with the letter 'a' (if you've enabled autocompletion)"
+      echo "$package -g welcome #greps for existing notes with the word 'welcome' + two subsequent lines for context and the note name"
+      echo "$package -n new_note # runs $myeditor at ${mypath}/new_note"
       echo ""
       echo "try the command: 'notes example'"
       echo ""
