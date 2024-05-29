@@ -44,7 +44,7 @@ this makes the executable 'notes' immediately available if ~/bin is a part of yo
 `notes {options} {note-name}`
 
 
-
+~~~
  settings                  opens the ~/.notes.conf file for modification
  -h, --help                show brief help
  -l, --list= LIST NOTES    list all note titles (tab doesn't populate until next shell launch)
@@ -60,7 +60,7 @@ examples:
 `notes -n testnote` #create (or edit) a note named: `testnote`
 `notes settings` #open settings panel for adjusted configuration options
 
-
+~~~
  
  ![Screenshot_20210824_122451](https://user-images.githubusercontent.com/35974491/130654524-59f26288-1fba-44a8-b461-162695795020.png)
  
