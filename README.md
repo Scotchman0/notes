@@ -20,6 +20,15 @@ you can edit the file directly with `notes settings`
 - default file extension (default null) can define that notes save as markdown, txt, log, etc. 
 - path to save notes in: defaults to ~/my-notes/ but you can redirect this anywhere more convenient like a common directory or secure log location.
 
+Example config setup:
+~~~
+mypath=~/my-notes #where you will save notes for query (leave out the trailing slash)
+myeditor=vim #default editor for creating new notes with -n option
+myreader=less #cat is default, can change to any other view option like less|subl|glow|<your_reader_app> - accepts quoted commands
+pathlength="$(echo $mypath/ | wc -m)" #trims the start of the path so that -k only shares filenames
+notes_extension= #left blank (default) can update a default for easy export - accepts .md|.log|.txt|etc
+~~~
+
 
 # getting started with notes: 
 1. clone this repository
@@ -50,8 +59,8 @@ this makes the executable 'notes' immediately available if ~/bin is a part of yo
  -l, --list= LIST NOTES    list all note titles (tab doesn't populate until next shell launch)
  -g, --grep=GREP STRING    greps match + 2 lines following in library (-i is enabled so not exact match)
  -k, --search              searches for string match (use quotes) and displays note titles with positive hit
- -n, --new=NEW NOTE/edit   opens vim in /home/sunbro/my-notes/<note_name> (sets a filetype extension if set in settings)
- -e, --edit                opens vim in /home/sunbro/my-notes/<note_name> but does not append a filetype extension
+ -n, --new=NEW NOTE/edit   opens ${editor} in /home/sunbro/my-notes/<note_name> (sets a filetype extension if set in settings)
+ -e, --edit                opens ${editor} in /home/sunbro/my-notes/<note_name> but does not append a filetype extension
  -d, --delete              deletes note: notes -d <note_name> --> (ask to confirm=true)
  -d! --delete!             delete without asking: notes -d! <notename>  --> (deleted)
  -p  --print | print       prints content of note directly to stdout instead of opening it with a reader for copy/paste
@@ -66,6 +75,7 @@ examples:
  
 
 try the command: 'notes example' for getting started
+
 
 
 # tab auto-completion:
