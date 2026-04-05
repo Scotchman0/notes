@@ -125,7 +125,7 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
       echo "$package [options] [arguments]"
       echo "configuration settings managed in ~/.notes.conf"
       echo "configuration settings managed in ~/.notes.conf"
-      echo "change options can be set by running 'notes settings' or manually editing this file"
+      echo "change options can be set by running 'notes --settings' or manually editing this file"
       echo " "
       echo "USAGE:"
       echo " "
@@ -143,6 +143,7 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
       echo " -d, --delete              deletes note: notes -d <note_name> --> (ask to confirm=true)"
       echo " -d! --delete!             delete without asking: notes -d! <notename>  --> (deleted)" 
       echo " -p  --print | print       prints content of note directly to stdout instead of opening it with a reader for copy/paste"
+      echo "     --settings            opens the settings panel and allows modification of the default configuration/experience"
       echo " "
       echo "{target-note-name}: (always a string)"
       echo " "
@@ -228,8 +229,8 @@ while test $# -gt 0; do #general while loop to lock behavior surrounding case op
         rm $mypath/"$@"
       shift
      ;;
-    settings) #launch editor on local settings panel
-      #usage: notes settings --> launch selected editor program (vim/nano) on ~/.notes.conf
+    --settings) #launch editor on local settings panel
+      #usage: notes --settings --> launch selected editor program (vim/nano) on ~/.notes.conf
       shift
       $myeditor ~/.notes.conf
       break
